@@ -1,8 +1,6 @@
-"use client"
-
 import type { MouseEvent } from "react"
 
-// 1. Props (من ملفك القديم)
+// Props
 interface CategorySidebarProps {
   activeCategory: string | null
   onCategorySelect: (category: string) => void
@@ -15,32 +13,25 @@ export default function CategorySidebar({
   onClose,
 }: CategorySidebarProps) {
   
-  // 2. معالج الضغط (من ملفك القديم)
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget.dataset.target
     if (target) {
       onCategorySelect(target)
     }
-    // onClose() // يمكنك تفعيل هذا إذا أردت أن تغلق القائمة عند الضغط على الهاتف
   }
 
-  // 3. دالة كلاسات Tailwind
   const getButtonClass = (target: string) => {
-    // كلاسات أساسية مترجمة من "drawer-menu-button"
     const baseClass = "flex items-center w-full gap-4 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
-    // كلاسات نشطة مترجمة من "is-active"
     const isActive = activeCategory === target ? "bg-gray-800 text-white font-semibold" : ""
     return `${baseClass} ${isActive}`.trim()
   }
 
-  // كلاس الأيقونة مترجم من "icon"
   const iconClass = "w-6 h-6 flex items-center justify-center flex-shrink-0"
 
   return (
-    // هذا هو "drawer-content" مترجماً
     <nav className="w-full h-full flex flex-col p-4 text-white overflow-y-auto custom-scroll">
       
-      {/* === القسم العلوي === */}
+      {/* Top section */}
       <div className="flex flex-col">
         <ul className="space-y-1">
           <li>
@@ -83,19 +74,15 @@ export default function CategorySidebar({
             </button>
           </li>
         </ul>
-        {/* "drawer-divider" */}
         <hr className="my-4 border-gray-700" />
       </div>
 
-      {/* === القسم الأوسط (Explore) === */}
+      {/* Explore section */}
       <div className="flex flex-col flex-1">
         <ul className="space-y-1">
-          {/* "drawer-section-title" */}
           <li className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
             Explore
           </li>
-          
-          {/* --- بداية القائمة المضافة --- */}
           <li><button type="button" data-target="all-channels" className={getButtonClass("all-channels")} onClick={handleClick}><span className={iconClass}><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M10.5 17.15l3.98-2.28c.67-.38.67-1.35 0-1.74l-3.98-2.28c-.67-.38-1.5.11-1.5.87v4.55c0 .77.83 1.26 1.5.88zM21 6h-7.59l2.94-2.94c.2-.2.2-.51 0-.71s-.51-.2-.71 0L12 5.99 8.36 2.35c-.2-.2-.51-.2-.71 0s-.2.51 0 .71L10.59 6H3c-1.1 0-2 .89-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.11-.9-2-2-2zm-1 14H4c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1h16c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1z" fill="currentColor"></path></svg> </span><span>All Channels</span></button></li>
           <li><button type="button" data-target="top-news" className={getButtonClass("top-news")} onClick={handleClick}><span className={iconClass}><svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"></rect></g><g><path d="M22,3l-1.67,1.67L18.67,3L17,4.67L15.33,3l-1.66,1.67L12,3l-1.67,1.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3v16 c0,1.1,0.9,2,2,2l16,0c1.1,0,2-0.9,2-2V3z M11,19H4v-6h7V19z M20,19h-7v-2h7V19z M20,15h-7v-2h7V15z M20,11H4V8h16V11z" fill="currentColor"></path></g></svg> </span><span>Top News</span></button></li>
           <li><button type="button" data-target="news" className={getButtonClass("news")} onClick={handleClick}><span className={iconClass}><svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"></rect></g><g><path d="M22,3l-1.67,1.67L18.67,3L17,4.67L15.33,3l-1.66,1.67L12,3l-1.67,1.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3v16 c0,1.1,0.9,2,2,2l16,0c1.1,0,2-0.9,2-2V3z M11,19H4v-6h7V19z M20,19h-7v-2h7V19z M20,15h-7v-2h7V15z M20,11H4V8h16V11z" fill="currentColor"></path></g></svg> </span><span>News</span></button></li>

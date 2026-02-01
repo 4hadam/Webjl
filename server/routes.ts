@@ -77,20 +77,25 @@ export async function registerRoutes(
 
       // Stream the response body directly
       if (response.body) {
-        response.body.pipeTo(
-          new WritableStream({
-            write(chunk) {
-              res.write(chunk);
-            },
-            close() {
-              res.end();
-            },
-            abort(err) {
-              console.error("Stream error:", err);
+        const reader = response.body.getReader();
+        const pump = async () => {
+          try {
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              res.write(Buffer.from(value));
+            }
+            res.end();
+          } catch (err) {
+            console.error("Stream error:", err);
+            if (!res.headersSent) {
               res.status(500).json({ error: "Stream failed" });
-            },
-          })
-        );
+            } else {
+              res.end();
+            }
+          }
+        };
+        pump();
       } else {
         res.end();
       }
@@ -113,13 +118,15 @@ export async function registerRoutes(
 
       let allChannels: IPTVChannel[] = [];
       for (const country in channelsByCountry) {
-        // @ts-ignore
-        channelsByCountry[country].forEach(channel => {
-          allChannels.push({
-            ...channel,
-            countryName: country,
+        const channels = channelsByCountry[country as keyof typeof channelsByCountry];
+        if (Array.isArray(channels)) {
+          channels.forEach(channel => {
+            allChannels.push({
+              ...channel,
+              countryName: country,
+            });
           });
-        });
+        }
       }
 
       const normalizedChannels = allChannels.map((ch) => ({

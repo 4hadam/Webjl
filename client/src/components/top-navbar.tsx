@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { Menu, X } from "lucide-react"
 
@@ -13,12 +11,7 @@ export default function TopNavbar({
   isMenuOpen = false,
 }: TopNavbarProps) {
   
-  // 🔴 تم حذف 'scrolled' لأن الخلفية أصبحت ثابتة
-  // const [scrolled, setScrolled] = useState(false)
   const [tvFill, setTvFill] = useState("#000000") 
-
-  // 🔴 تم حذف 'useEffect' الخاص بـ 'onScroll'
-  // useEffect(() => { ... }, [])
 
   useEffect(() => {
     const baseUrl = window.location.href.split('#')[0]; 
@@ -27,14 +20,10 @@ export default function TopNavbar({
   
   return (
     <header
-      // 🔴🔴🔴 التعديل هنا: تغيير الخلفية 🔴🔴🔴
-      // تم تغيير 'bg-transparent' و 'bg-black/80' إلى 'bg-[#0B0D11]'
-      // وتمت إزالة 'backdrop-blur-sm' و 'shadow-md'
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-[#0B0D11]`}
     >
       <div className="relative px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         
-        {/* ✨ Logo (في البداية) */}
         <a
           href="/"
           className="flex items-center" 
@@ -44,12 +33,10 @@ export default function TopNavbar({
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 480 140"
             role="img"
-            aria-label="sora.tv logo Caros Soft Bold"
-            // 🔴 تم حذف التعديل على 'scale' الخاص بـ 'scrolled'
+            aria-label="sora.tv logo"
             className={`h-14 w-auto transition-transform duration-500 hover:scale-105`}
           >
-            {/* ... (باقي محتوى الشعار SVG) ... */}
-            <desc>شعار sora.tv بخط Caros Soft Bold...</desc>
+            <desc>sora.tv logo</desc>
             <defs>
               <linearGradient id="tvGradient" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#FF4B2B"/>
@@ -82,7 +69,6 @@ export default function TopNavbar({
           </svg>
         </a>
 
-        {/* 🔴 زر القائمة (في اليمين) */}
         <div className="flex items-center">
           <button
             onClick={onMenuClick} 

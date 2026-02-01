@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useRef, useCallback } from "react"
 import * as THREE from "three"
 import type { GlobeInstance } from "globe.gl"

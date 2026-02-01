@@ -39,7 +39,6 @@ export default function Home() {
 
   if (!mounted) return null
 
-  // 🎯 --- معالجات الأحداث ---
   const handleGlobeCountryClick = (countryName: string) => {
     setSelectedChannel(null)
     setSelectedCountry(countryName)
@@ -84,15 +83,13 @@ export default function Home() {
 
       <div className="flex-1 overflow-hidden relative">
         
-{/* 🌍 الكرة الأرضية */}
-<div className="absolute inset-0 z-10 sm:right-[320px] lg:right-[340px]">
-  <GlobeViewer
-    selectedCountry={selectedCountry}
-    onCountryClick={handleGlobeCountryClick}
-    isMobile={isMobile}
-  />
-</div>
-        {/* 🎥 مشغل الفيديو (سطح المكتب فقط) */}
+        <div className="absolute inset-0 z-10 sm:right-[320px] lg:right-[340px]">
+          <GlobeViewer
+            selectedCountry={selectedCountry}
+            onCountryClick={handleGlobeCountryClick}
+            isMobile={isMobile}
+          />
+        </div>
         {!isMobile && selectedChannel && (selectedCountry || activeCategory !== "all-channels") && ( 
           <div
             className="absolute top-0 bottom-0 z-30 flex items-center justify-center p-4 sm:p-8 
@@ -107,8 +104,6 @@ export default function Home() {
             />
           </div>
         )}
-
-        {/* 🖥️ قائمة سطح المكتب (الخاصة بالدول - يمين) */}
         {!isMobile && (
           <div
             className="absolute right-0 top-16 bottom-0 w-[320px] lg:w-[340px] z-20 bg-gray-900/90 backdrop-blur-md"
@@ -127,7 +122,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* 📱 🖥️  قائمة الفئات المنبثقة (لجميع الأحجام) */}
         <>
           <div
             className={`fixed top-16 left-0 bottom-0 z-40 w-64 bg-[#0B0D11] shadow-lg transform transition-transform duration-300 ease-in-out
@@ -148,7 +142,6 @@ export default function Home() {
         </>
 
 
-        {/* 📱 قائمة الهاتف (الخاصة بالقنوات) */}
         {isMobile && (
           <>
             <div
@@ -157,7 +150,6 @@ export default function Home() {
                 top-16 bottom-0 flex flex-col`}
             >
               {selectedChannel && (
-                // 👈🔴 (التعديل 1) إزالة flex-1
                 <div className="w-full bg-black flex-shrink-0 relative">
                   <CountryDetail
                     country={selectedCountry ?? activeCategory} 
@@ -172,14 +164,13 @@ export default function Home() {
               <div
                 onClick={toggleMobileSidebar}
                 className={`w-full flex items-center justify-center cursor-grab flex-shrink-0 ${
-                  selectedChannel ? 'py-0' : 'py-1.5' // (تعديل الهامش من المرة السابقة)
+                  selectedChannel ? 'py-0' : 'py-1.5'
                 }`}
                 aria-label="Toggle sidebar"
               >
                 <span className="w-12 h-1.5 bg-gray-700 rounded-full" />
               </div>
               
-              {/* 👈🔴 (التعديل 2) تغيير h-[60%] إلى flex-1 */}
               <div className="flex-1 overflow-y-auto custom-scroll">
                 <CountrySidebar
                   selectedCountry={selectedCountry}
