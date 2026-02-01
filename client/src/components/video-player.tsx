@@ -1,9 +1,7 @@
-"use client"
-
 import { useState } from "react"
-import YouTube from "react-youtube" // 👈 (مهم لليوتيوب)
+import YouTube from "react-youtube"
 
-// 🔍 تحديد إذا كان الرابط من YouTube
+// Determine if the URL is from YouTube
 function getYouTubeVideoId(url: string): string | null {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|live\/)([^#&?]*).*/
   const match = url.match(regExp)
@@ -14,14 +12,14 @@ interface VideoPlayerProps {
   src: string
   autoPlay?: boolean
   muted?: boolean
-  isMobile?: boolean // 👈🔴 (تمت الإضافة)
+  isMobile?: boolean
 }
 
 export default function VideoPlayer({
   src,
   autoPlay = true, 
   muted = false,
-  isMobile = false, // 👈🔴 (تمت الإضافة)
+  isMobile = false,
 }: VideoPlayerProps) {
   
   const [loading, setLoading] = useState(true)
@@ -37,7 +35,7 @@ export default function VideoPlayer({
     setLoading(false)
   }
 
-  // 🎥 👈 (هذا هو الجزء الوحيد الذي نحتاجه)
+  // Render YouTube player
   if (youTubeVideoId) {
     return (
       <div className="relative w-full h-full bg-black overflow-hidden">
@@ -55,7 +53,7 @@ export default function VideoPlayer({
             playerVars: {
               autoplay: autoPlay ? 1 : 0,
               mute: muted ? 1 : 0,
-              controls: 1, // 👈 إظهار عناصر تحكم يوتيوب
+              controls: 1,
               rel: 0,
               modestbranding: 1,
             },
@@ -75,7 +73,7 @@ export default function VideoPlayer({
     )
   }
 
-  // 🎬 (احتياطي) في حال تم إرسال رابط خاطئ
+  // Fallback for invalid YouTube URL
   return (
     <div className="relative w-full h-full bg-black flex items-center justify-center">
         <p className="text-red-500">Invalid YouTube URL passed to player.</p>

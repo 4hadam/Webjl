@@ -64,10 +64,9 @@ export async function registerRoutes(
         return res.status(response.status).json({ error: `Upstream error: ${response.statusText}` });
       }
 
-      // Pipe the response
+      // Set response status and forward headers
       res.status(response.status);
       response.headers.forEach((value, key) => {
-        // Skip some headers if needed, or set them all
         res.setHeader(key, value);
       });
       
@@ -76,37 +75,30 @@ export async function registerRoutes(
       res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
       res.setHeader("Access-Control-Allow-Headers", "*");
 
+      // Stream the response body directly
       if (response.body) {
-         // @ts-ignore - native fetch body to node stream
-         const reader = response.body.getReader();
-         const stream = new ReadableStream({
-           start(controller) {
-             return pump();
-             function pump() {
-               return reader.read().then(({ done, value }) => {
-                 if (done) {
-                   controller.close();
-                   return;
-                 }
-                 controller.enqueue(value);
-                 return pump();
-               });
-             }
-           }
-         });
-         
-         // In Node 20+, we can just iterate the body or use arrayBuffer
-         // But for simplicity with Express response (which is a stream):
-         const arrayBuffer = await response.arrayBuffer();
-         res.write(Buffer.from(arrayBuffer));
-         res.end();
+        response.body.pipeTo(
+          new WritableStream({
+            write(chunk) {
+              res.write(chunk);
+            },
+            close() {
+              res.end();
+            },
+            abort(err) {
+              console.error("Stream error:", err);
+              res.status(500).json({ error: "Stream failed" });
+            },
+          })
+        );
       } else {
         res.end();
       }
-
     } catch (err) {
       console.error("Proxy error:", err);
-      res.status(500).json({ error: "Proxy request failed" });
+      if (!res.headersSent) {
+        res.status(500).json({ error: "Proxy request failed" });
+      }
     }
   });
 

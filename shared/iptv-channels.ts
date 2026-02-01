@@ -1,5 +1,4 @@
-// 🔴🔴🔴 بداية الإضافة: قاموس الكلمات المفتاحية الذكي 🔴🔴🔴
-// هذا القاموس هو "عقل" الفلتر. يمكنك إضافة أي كلمات مفتاحية هنا.
+// Category keywords for intelligent filtering
 const categoryKeywords: Record<string, string[]> = {
   music: [
     'music', 'mtv', 'radio', 'fm', 'hits', 'rap', 'pop', 'rock', 'schlager', 
@@ -40,10 +39,8 @@ const categoryKeywords: Record<string, string[]> = {
   ],
   cooking: [
     'cooking', 'kitchen', 'food', 'chef', 'مطبخ', 'طبخ', 'food network'
-  ]
-  // ... يمكنك إضافة فئات وكلمات مفتاحية أخرى هنا
+  ],
 };
-// 🔴🔴🔴 نهاية الإضافة 🔴🔴🔴
 
 
 // Type definition for channels
@@ -52,7 +49,7 @@ export interface IPTVChannel {
   url: string
   logo?: string
   category?: string
-  countryName?: string // (لربط القناة بالدولة في البحث العام)
+  countryName?: string
   language?: any
   lang?: any
   platform?: string

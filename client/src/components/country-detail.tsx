@@ -114,9 +114,7 @@ export default function CountryDetail({ country, channel, onBack, isMobile, acti
       
       <div className={
         isMobile
-          // 👈🔴 (التعديل) تغيير h-full إلى aspect-video
           ? "relative w-full aspect-video bg-black"
-          // (لوضع سطح المكتب: استخدم التنسيقات الأصلية للنافذة العائمة)
           : "relative w-[90%] sm:w-[85%] lg:w-[82%] max-w-6xl aspect-video rounded-2xl overflow-hidden shadow-xl bg-black"
       }>
         {loading ? (
@@ -157,7 +155,7 @@ export default function CountryDetail({ country, channel, onBack, isMobile, acti
           </div>
         )}
 
-        {/* ⭐ أزرار المفضلة والإغلاق */}
+        {/* Favorite and close buttons */}
         <div className="absolute top-3 right-3 flex items-center gap-2 z-40">
           <button
             onClick={toggleFavorite}

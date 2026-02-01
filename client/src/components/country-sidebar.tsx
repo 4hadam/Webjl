@@ -30,7 +30,7 @@ interface CountrySidebarProps {
   activeCategory: string | null
 }
 
-/** خريطة لغات افتراضية للدولة كمحفّظ (fallback) */
+// Default language map for countries (fallback)
 export const COUNTRY_LANG_MAP: Record<string, string> = {
   "Afghanistan": "fa",
   "Albania": "sq",
